@@ -591,7 +591,7 @@ base.configure(bg=None)
 style=ttk.Style()
 style.configure("Treeview.Heading",font=("",10,"normal","italic"))
 style.configure("MyButton.TButton",backgroud="red",foreground="black")
-style.map("MyButton.TButton",foreground=[("pressed","red"),("active","black")])
+style.map("MyButton.TButton",foreground=[("pressed","white"),("active","black")])
 #treeview
 frame1=tk.Frame(base)
 #frame1.configure(background="skyblue")
