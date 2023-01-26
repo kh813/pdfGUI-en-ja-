@@ -576,6 +576,8 @@ pw=None
 pg_min={}
 pg_max={}
 pg_flags={}
+teal="#008080"
+indianred="#cd5c5c"
 #関数
 #ここより下はUI
 #Window & Frame初期設定
@@ -619,7 +621,7 @@ tree.bind("<Double-1>",open_pdf)
 #各種ボタン設定
 #frame2
 
-frame2=tk.Frame(base,width=450,bg="teal")
+frame2=tk.Frame(base,width=450,bg=teal)
 add=ttk.Button(text="追加",style="MyButton.TButton",padding=[45,button_pad],command=add_file)
 up=ttk.Button(text="上移動",style="MyButton.TButton",padding=[45,button_pad],command=move_up)
 down=ttk.Button(text="下移動",style="MyButton.TButton",padding=[45,button_pad],command=move_down)
@@ -628,7 +630,7 @@ delete=ttk.Button(text="削除",style="MyButton.TButton",padding=[45,button_pad]
 allselect=ttk.Button(text="ALL選択",style="MyButton.TButton",padding=[45,button_pad],command=select_all)
 replace=ttk.Button(text="置換",style="MyButton.TButton",padding=[45,button_pad],command=pdf_replace)
 #frame3
-frame3=tk.Frame(base,bg="indianred")
+frame3=tk.Frame(base,bg=indianred)
 pdf_connect=ttk.Button(text="pdf結合",style="MyButton.TButton",padding=[35,button_pad],command=connect)
 show=ttk.Button(text="表示",style="MyButton.TButton",padding=[35,button_pad],command=print_dict)
 end=ttk.Button(text="終了",style="MyButton.TButton",padding=[35,button_pad],command=exit)
