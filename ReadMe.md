@@ -66,6 +66,7 @@ Windowsでの画面
 * tkinterのバージョンによってはエラーになるかも? 色の設定でエラーになりｍしたが修正済みです．
 # 参考
 CubePDF Pageはレイアウトなどを参考にしました．リンクを載せておきます．
+https://www.cube-soft.jp/cubepdfpage/
 
 
 
