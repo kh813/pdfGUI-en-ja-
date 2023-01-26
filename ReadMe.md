@@ -15,7 +15,7 @@ pip install PyPDF2
 ```
 pip install -r requirements.txt
 ```
-実行方法は該当ディレクトリに移動移し
+実行方法は該当ディレクトリに移動し
 ```
 python pdf_gui.py
 ```
