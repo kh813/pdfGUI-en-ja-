@@ -24,11 +24,20 @@ python pdf_gui.py
 <img width="1412" alt="gui" src="https://user-images.githubusercontent.com/118164921/214738576-624c729d-28c4-48e3-bba1-24907787d6c5.png" title="Mac">
 Macでの画面
 </div>
+<!--
 <div align="center">
 <img width="1412" alt="gui" src="https://user-images.githubusercontent.com/118164921/214738576-624c729d-28c4-48e3-bba1-24907787d6c5.png" title="Mac">
 Windowsでの画面
 </div>
+)
+-->
+また実行ファイルを生成する場合は，
 
+```
+python generate_exe.py
+```
+
+と入力するとdistというディレクトリに実行ファイルが生成される．
 # できること
 * pdfの結合 
 * pdfの分割 
