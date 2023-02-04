@@ -582,7 +582,7 @@ indianred="#cd5c5c"
 #ここより下はUI
 #Window & Frame初期設定
 base=tk.Tk()
-base.title("pdf結合&分割")
+base.title("pdfGUI")
 base.geometry("1300x600+200+200")
 
 
