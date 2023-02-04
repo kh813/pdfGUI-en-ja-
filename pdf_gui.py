@@ -529,7 +529,7 @@ def page_assgn():
         entry2.grid(column=1,row=3,padx=5,pady=5)
 
         
-        dec=ttk.Button(pw,text="決定",command=print_pg).grid(column=0,row=4,columnspan=2)
+        dec=ttk.Button(pw,text="決定",command=print_pg).grid(column=0,row=4,columnspan=2,pady=10)
 
         
         pw.mainloop()
@@ -582,7 +582,7 @@ indianred="#cd5c5c"
 #ここより下はUI
 #Window & Frame初期設定
 base=tk.Tk()
-base.title("pdf操作")
+base.title("pdf結合&分割")
 base.geometry("1300x600+200+200")
 
 
