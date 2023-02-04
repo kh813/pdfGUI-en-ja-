@@ -21,16 +21,16 @@ python pdf_gui.py
 ```
 これでGUIが起動する．
 <div align="center">
-<img width="1412" alt="gui" src="https://user-images.githubusercontent.com/118164921/214738576-624c729d-28c4-48e3-bba1-24907787d6c5.png" title="Mac">
-Macでの画面
-</div>
-<!--
-<div align="center">
-<img width="1412" alt="gui" src="https://user-images.githubusercontent.com/118164921/214738576-624c729d-28c4-48e3-bba1-24907787d6c5.png" title="Mac">
+<img width="1412" alt="gui" src="https://user-images.githubusercontent.com/118164921/216750822-6e194a07-8b29-44f6-be16-ea942ea0c823.png" title="Windows">
 Windowsでの画面
 </div>
-)
--->
+<br>
+<div align="center">
+<img width="1412" alt="gui" src="https://user-images.githubusercontent.com/118164921/216751084-27285c0c-5bb2-47ce-813f-7a1ec31b72f9.png" title="Mac">
+Macでの画面
+</div>
+<br>
+
 また実行ファイルを生成する場合は，
 
 ```
