@@ -67,7 +67,7 @@ def add_file():
             return
         elif len(filename)!=len(set(filename)):
             del filename[h+1]
-            error_same=msg.showerror("同一名エラー","名前が同じだ　やり直せ")
+            error_same=msg.showerror("Same name / 同一名","Try again with anther name / 別名を指定してください")
             return
         try:
             reader=pf2.PdfFileReader(filename[h+1])
@@ -81,7 +81,7 @@ def add_file():
             i+=1
         except pf2.utils.PdfReadError as e:
             del filename[h+1]
-            msg.showerror("pdf破損","pdfが正しくありません。")
+            msg.showerror("PDF corrupted / PDF破損","PDF seems broken / PDFが正しくありません")
     else:
         tmp=fd.askopenfilename(filetypes=[("PDF","*.pdf")])
         filename.append(tmp)
@@ -90,7 +90,7 @@ def add_file():
             return
         elif len(filename)!=len(set(filename)):
             del filename[i]
-            error_same=msg.showerror("同一名エラー","名前が同じだ　やり直せ")
+            error_same=msg.showerror("Same name / 同一名","Try again with anther name / 別名を指定してください")
             return
         try :
             reader=pf2.PdfFileReader(filename[i])
@@ -100,7 +100,7 @@ def add_file():
             i+=1
         except pf2.utils.PdfReadError:
             del filename[i]
-            msg.showerror("pdf破損","pdfが正しくありません。")
+            msg.showerror("PDF corrupted / PDF破損","PDF seems broken / PDFが正しくありません")
     remove_tree()
 
 
@@ -134,7 +134,7 @@ def connect():
         try:
             merger.write(pdfname)
         except PermissionError:
-            msg.showerror("","ファイルが使われています。")
+            msg.showerror("","File in use / ファイル使用中")
             return
         else:
             subprocess.Popen([process_name,pdfname],shell=shell_flag)
@@ -149,7 +149,7 @@ def pdf_split():
     dir=fd.askdirectory()
     if dir=="":
             return
-    response=msg.askyesno("確認","pdfを開きますか？")
+    response=msg.askyesno("Confirm / 確認","Would you open the devided PDFs? / 分割されたPDFを開きますか？")
     if len(sc)==0:
         for m in range(i):
             reader=pf2.PdfFileReader(filename[m])
@@ -175,7 +175,7 @@ def pdf_split():
                     if response==True:
                         subprocess.Popen([process_name,"{}/{}".format(dir,h)],shell=shell_flag)
                 except PermissionError:
-                    msg.showerror("","ファイルが使われています。")
+                    msg.showerror("","File in use / ファイル使用中")
                     return
                 s=re.sub(r".pdf$",r"_extract2.pdf",filename[m])
                 h=os.path.basename(s)
@@ -205,7 +205,7 @@ def pdf_split():
                         if response==True:
                             subprocess.Popen([process_name,"{}/{}".format(dir,h)],shell=shell_flag)
                 except PermissionError:
-                    msg.showerror("","ファイルが使われています。")
+                    msg.showerror("","File in use / ファイル使用中")
                     return
                 merger2.close()
                 
@@ -231,7 +231,7 @@ def pdf_split():
                             with open("{}/{}".format(dir,h),"wb") as f:
                                 writer.write(f)
                     except PermissionError:
-                        msg.showerror("","ファイルが使われています。")
+                        msg.showerror("","File in use / ファイル使用中")
                         return
                     if response==True:
                         subprocess.Popen([process_name,"{}/{}".format(dir,h)],shell=shell_flag)
@@ -265,7 +265,7 @@ def pdf_split():
                         if response==True:
                             subprocess.Popen([process_name,"{}/{}".format(dir,h)],shell=shell_flag)
                 except PermissionError:
-                    msg.showerror("","ファイルが使われています。")
+                    msg.showerror("","File in use / ファイル使用中")
                     return
                 merger.close()
                 if response==True:
@@ -298,7 +298,7 @@ def pdf_split():
                         if response==True:
                             subprocess.Popen([process_name,"{}/{}".format(dir,h)],shell=shell_flag)
                 except PermissionError:
-                    msg.showerror("","ファイルが使われています。")
+                    msg.showerror("","File in use / ファイル使用中")
                     return
                 merger.close()
             else:
@@ -323,7 +323,7 @@ def pdf_split():
                             with open("{}/{}".format(dir,h),"wb") as f:
                                 writer.write(f)
                     except PermissionError:
-                        msg.showerror("","ファイルが使われています。")
+                        msg.showerror("","File in use / ファイル使用中")
                         return
                     if response==True:
                         subprocess.Popen([process_name,"{}/{}".format(dir,h)],shell=shell_flag)
@@ -366,7 +366,7 @@ def pdf_replace():
                 tree.insert("",sct_ind[n],values=(os.path.basename(dust[n]),reader.numPages,pg_dust[n],dust[n]))
                 filename.insert(sct_ind[n],dust[n])
                 i+=1
-            msg.showerror("同一名エラー","名前が同じだ　やり直せ")
+            msg.showerror("Same name / 同一名","Try again with anther name / 別名を指定してください")
             return
         #ページ範囲設定
         pg_flags[sct_ind[0]]=False
@@ -458,7 +458,7 @@ def page_assgn():
                     for n in range(len(m)):
                         if int(entry1.get()) > int(tree.item(m[n],"values")[1]) or int(entry1.get())==0:
                             pw.destroy()
-                            msg.showerror("","範囲にありません")
+                            msg.showerror("","Out of range / 範囲にありません")
                             return
                         pg_flags[tree.index(m[n])]=True
                         judge_flags(tree.index(m[n]),int(entry1.get()),int(entry1.get()))
@@ -467,7 +467,7 @@ def page_assgn():
                     for n in range(len(m)):
                         if int(entry2.get()) > int(tree.item(m[n],"values")[1]) or int(entry2.get())==0:
                             pw.destroy()
-                            msg.showerror("","範囲にありません")
+                            msg.showerror("","Out of range / 範囲にありません")
                             return
                         pg_flags[tree.index(m[n])]=True
                         judge_flags(tree.index(m[n]),int(entry2.get()),int(entry2.get()))
@@ -477,7 +477,7 @@ def page_assgn():
                     for n in range(len(m)):
                         if int(entry1.get()) > int(tree.item(m[n],"values")[1]) or int(entry2.get()) > int(tree.item(m[n],"values")[1]) or int(entry1.get())==0 or int(entry2.get())<=1 or int(entry1.get())>int(entry2.get()):
                             pw.destroy()
-                            msg.showerror("","範囲にありません")
+                            msg.showerror("","Out of range / 範囲にありません")
                             return
                         pg_flags[tree.index(m[n])]=True
                         judge_flags(tree.index(m[n]),int(entry2.get()),int(entry1.get()))
@@ -495,10 +495,10 @@ def page_assgn():
 
         #ウィンドウ初期設定
         pw=tk.Toplevel(base)
-        pw.title("ページ指定")
+        pw.title("Select page(s) / ページ指定")
         px=int(bx+wb/2-125)
         py=int(by+hb/2-100)
-        pw.geometry("250x200+{}+{}".format(px,py))
+        pw.geometry("380x200+{}+{}".format(px,py))
         pw.resizable(width=False,height=False)
         pw.grab_set()
         pw.grid_columnconfigure(0,weight=1)
@@ -514,10 +514,10 @@ def page_assgn():
         intvc=(pw.register(validation),"%P")
 
         #ラベル
-        tk.Label(pw,text="ページ範囲指定",font=("",15,"bold")).grid(column=0,row=0,padx=5,pady=5,columnspan=2)
-        tk.Label(pw,text="(数字のみ)").grid(column=0,row=1,padx=5,pady=5,columnspan=2)
-        tk.Label(pw,text="最小値",font=("",10,"")).grid(column=0,row=2,padx=5,pady=5)
-        tk.Label(pw,text="最大値",font=("",10,"")).grid(column=0,row=3,padx=5,pady=5)
+        tk.Label(pw,text="Select page range / ページ範囲指定",font=("",15,"bold")).grid(column=0,row=0,padx=5,pady=5,columnspan=2)
+        tk.Label(pw,text="(Numbers only / 半角数字のみ)").grid(column=0,row=1,padx=5,pady=5,columnspan=2)
+        tk.Label(pw,text="Min / 最小",font=("",10,"")).grid(column=0,row=2,padx=5,pady=5)
+        tk.Label(pw,text="Max / 最大",font=("",10,"")).grid(column=0,row=3,padx=5,pady=5)
 
         #テキストボックス
         entry1=tk.Entry(pw,width=20,validate="key",validatecommand=intvc,takefocus=True)
@@ -529,7 +529,7 @@ def page_assgn():
         entry2.grid(column=1,row=3,padx=5,pady=5)
 
         
-        dec=ttk.Button(pw,text="決定",command=print_pg).grid(column=0,row=4,columnspan=2,pady=10)
+        dec=ttk.Button(pw,text="OK / 決定",command=print_pg).grid(column=0,row=4,columnspan=2,pady=10)
 
         
         pw.mainloop()
@@ -563,8 +563,8 @@ def print_dict():
     print(base.winfo_geometry())
     print(tree.get_children())
     print("pgflags",pg_flags)
-    print("最小値：",pg_min)
-    print("最大値：",pg_max)
+    print("Min/最小値：",pg_min)
+    print("Max/最大値：",pg_max)
     #print(tree.item(tree.get_children()[i-1],"values")[2])
     m=re.search(r'\d+$',tree.item(tree.get_children()[i-1],"values")[2])
     print(m.group())
@@ -598,15 +598,15 @@ style.map("MyButton.TButton",foreground=[("pressed","white"),("active","black")]
 frame1=tk.Frame(base)
 #frame1.configure(background="skyblue")
 tree=ttk.Treeview(frame1,show="headings",columns=(1,2,3,4),selectmode="extended")
-tree.heading(1,text="ファイル名",command=select_all)
-tree.heading(2,text="ページ数",command=select_all)
-tree.heading(3,text="ページ範囲",command=select_all)
-tree.heading(4,text="ファイルパス",command=select_all)
+tree.heading(1,text="File name / ファイル名",command=select_all)
+tree.heading(2,text="Total pages / ページ数",command=select_all)
+tree.heading(3,text="Page range/ページ範囲",command=select_all)
+tree.heading(4,text="File path/ファイルパス",command=select_all)
 
 tree.column(1,width=175)
-tree.column(2,width=25,anchor=tk.CENTER)
-tree.column(3,width=25,anchor=tk.CENTER)
-tree.column(4,width=600,minwidth=250)
+tree.column(2,width=100,anchor=tk.CENTER)
+tree.column(3,width=100,anchor=tk.CENTER)
+tree.column(4,width=450,minwidth=250)
 
 
 tree.pack(padx=10,pady=10,expand=1,fill="both",side=tk.LEFT)
@@ -622,20 +622,20 @@ tree.bind("<Double-1>",open_pdf)
 #frame2
 
 frame2=tk.Frame(base,width=450,bg=teal)
-add=ttk.Button(text="追加",style="MyButton.TButton",padding=[45,button_pad],command=add_file)
-up=ttk.Button(text="上移動",style="MyButton.TButton",padding=[45,button_pad],command=move_up)
-down=ttk.Button(text="下移動",style="MyButton.TButton",padding=[45,button_pad],command=move_down)
-release=ttk.Button(text="選択解除",style="MyButton.TButton",padding=[45,button_pad],command=remove_tree)
-delete=ttk.Button(text="削除",style="MyButton.TButton",padding=[45,button_pad],command=Delete_pdf)
-allselect=ttk.Button(text="ALL選択",style="MyButton.TButton",padding=[45,button_pad],command=select_all)
-replace=ttk.Button(text="置換",style="MyButton.TButton",padding=[45,button_pad],command=pdf_replace)
+add=ttk.Button(text="Add / 追加",style="MyButton.TButton",padding=[45,button_pad],command=add_file,width=20)
+up=ttk.Button(text="Move up / 上移動",style="MyButton.TButton",padding=[45,button_pad],command=move_up,width=20)
+down=ttk.Button(text="Move down / 下移動",style="MyButton.TButton",padding=[45,button_pad],command=move_down,width=20)
+release=ttk.Button(text="Unselect / 選択解除",style="MyButton.TButton",padding=[45,button_pad],command=remove_tree,width=20)
+delete=ttk.Button(text="Delete / 削除",style="MyButton.TButton",padding=[45,button_pad],command=Delete_pdf,width=20)
+allselect=ttk.Button(text="Select All / ALL選択",style="MyButton.TButton",padding=[45,button_pad],command=select_all,width=20)
+replace=ttk.Button(text="Replace / 置換",style="MyButton.TButton",padding=[45,button_pad],command=pdf_replace,width=20)
 #frame3
 frame3=tk.Frame(base,bg=indianred)
-pdf_connect=ttk.Button(text="pdf結合",style="MyButton.TButton",padding=[35,button_pad],command=connect)
-show=ttk.Button(text="表示",style="MyButton.TButton",padding=[35,button_pad],command=print_dict)
-end=ttk.Button(text="終了",style="MyButton.TButton",padding=[35,button_pad],command=exit)
-split=ttk.Button(text="pdf分割",style="MyButton.TButton",padding=[35,button_pad],command=pdf_split)
-assign=ttk.Button(text="ページ指定",style="MyButton.TButton",padding=[35,button_pad],command=page_assgn)
+pdf_connect=ttk.Button(text="Merge PDF / PDF結合",style="MyButton.TButton",padding=[35,button_pad],command=connect)
+show=ttk.Button(text="Show / 表示",style="MyButton.TButton",padding=[35,button_pad],command=print_dict)
+end=ttk.Button(text="Exit / 終了",style="MyButton.TButton",padding=[35,button_pad],command=exit)
+split=ttk.Button(text="Devide PDF / PDF分割",style="MyButton.TButton",padding=[35,button_pad],command=pdf_split)
+assign=ttk.Button(text="Select page(s) / ページ指定",style="MyButton.TButton",padding=[35,button_pad],command=page_assgn)
 
 #frame設置
 frame1.pack(side=tk.LEFT,anchor=tk.NW,in_=base,expand=1,fill="both")
@@ -654,9 +654,9 @@ release.pack(anchor=tk.E,padx=10,pady=10,in_=frame2)
 allselect.pack(anchor=tk.E,padx=10,pady=10,in_=frame2)
 delete.pack(anchor=tk.E,padx=10,pady=10,in_=frame2)
 #frame3
-split.pack(side=tk.LEFT,anchor=tk.E,padx=10,pady=10,in_=frame3)
 pdf_connect.pack(side=tk.LEFT,anchor=tk.E,padx=10,pady=10,in_=frame3)
 assign.pack(side=tk.LEFT,anchor=tk.E,padx=10,pady=10,in_=frame3)
+split.pack(side=tk.LEFT,anchor=tk.E,padx=10,pady=10,in_=frame3)
 #show.pack(side=tk.LEFT,anchor=tk.E,padx=10,pady=10,in_=frame3)
 end.pack(side=tk.LEFT,anchor=tk.E,padx=10,pady=10,in_=frame3)
 
