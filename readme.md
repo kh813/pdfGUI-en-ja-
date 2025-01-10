@@ -81,9 +81,9 @@ You'll find the executable file in dist directory
 * ページ範囲を指定していない場合  
   When the pages are NOT selected 
   1. ファイルを追加  
-     Add file
+     Add file(s)
   2. ファイルを選択し下のボタンのpdf分割をクリック  
-     Select files and click "Device PDF / PDF"
+     Select file(s) and click "Device PDF / PDF"
   3. 好きな場所に保存  
      Save it to the directory of your choice  
 
@@ -94,8 +94,8 @@ You'll find the executable file in dist directory
   When the pages are selected 
   1.  ページ範囲のボタンをクリックし最小，最大ページを設定  
       Click "Page range" and specify min/max pages
-  2.  Treeviewに表示されていることを確認した後，分割したいpdfをクリック  
-      Make sure it's listed on Treeview, then click "Device PDF / PDF" 
+  2.  Treeviewに指定したページなどが表示されていることを確認した後，「Device PDF / PDF分割」をクリック  
+      Make sure selected pages, etc. are listed on Treeview, then click "Device PDF / PDF分割" 
   3.  好きな場所に保存  
       Save it to the directory of your choice
    
