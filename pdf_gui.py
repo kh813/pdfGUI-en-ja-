@@ -631,7 +631,7 @@ allselect=ttk.Button(text="Select All / ALL選択",style="MyButton.TButton",padd
 replace=ttk.Button(text="Replace / 置換",style="MyButton.TButton",padding=[45,button_pad],command=pdf_replace,width=20)
 #frame3
 frame3=tk.Frame(base,bg=indianred)
-pdf_connect=ttk.Button(text="Merge PDF / PDF結合",style="MyButton.TButton",padding=[35,button_pad],command=connect)
+pdf_connect=ttk.Button(text="Merge PDFs / PDF結合",style="MyButton.TButton",padding=[35,button_pad],command=connect)
 show=ttk.Button(text="Show / 表示",style="MyButton.TButton",padding=[35,button_pad],command=print_dict)
 end=ttk.Button(text="Exit / 終了",style="MyButton.TButton",padding=[35,button_pad],command=exit)
 split=ttk.Button(text="Devide PDF / PDF分割",style="MyButton.TButton",padding=[35,button_pad],command=pdf_split)
