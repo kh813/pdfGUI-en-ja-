@@ -1,16 +1,21 @@
 # Special thanks to the original creator
 
 こちらで公開されていたコードをベースに、日英バイリンガル表示化  
+また「PDF特定ページ抽出」機能を追加
 Based on the following code, English labels added  
 https://github.com/jean0enuma/pdfGUI  
   
-また以下の説明文は原文に英訳をつけました  
-I added English translation to the following original readme  
+以下の説明文は原文を更新した上で英訳を追加  
+I revised a little and added English translation to the following original readme  
 ____
 
 # pdfGUI
-PDFの結合，分割ができるpythonGUI(Tkinter)  
-Merge / devide PDF  
+* PDFの結合，抽出、分割ができる  
+  Merge / extract / devide PDF  
+* Python/Tkinterを利用  
+  Using Python/Tkinter
+* Pyinstallerでexe/app化  
+  Generate exe/app binaries with Pyinstaller
 
 # 動作条件 / Supported environment
 - Windows 11 (x64, arm64)   
@@ -59,7 +64,8 @@ You'll find the executable file in dist directory
 
 # できること / Features
 * PDFの結合 / Merge PDFs  
-* PDFの分割 / Devide PDF  
+* PDFの特定ページ抽出 / Extrace selected pages from PDFs  
+* PDFの分割 / Devide PDFs  
   
 どちらの機能もページ範囲の指定により，その範囲のみの結合，分割が可能.  
 
