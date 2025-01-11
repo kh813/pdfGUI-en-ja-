@@ -138,21 +138,22 @@ def connect():
         else:
             subprocess.Popen([process_name,pdfname],shell=shell_flag)
     merger.close()
-    
-#pdf分割
-def pdf_split():
+                    
+#pdf抽出
+def pdf_extract():
     if i==0:
         return
     sc=tree.selection()
     dir=fd.askdirectory()
     if dir=="":
             return
-    response=msg.askyesno("Confirm / 確認","Would you open the devided PDFs? / 分割されたPDFを開きますか？")
+    response=msg.askyesno("Confirm / 確認","Would you open the extracted PDFs? / 抽出されたPDFを開きますか？")
+
     if len(sc)==0:
+        # 何も選択されていない場合
         for m in range(i):
             reader=pf2.PdfFileReader(filename[m])
             merger=pf2.PdfFileMerger()
-            merger2=pf2.PdfFileMerger()
             if pg_flags[m]==True:
                 s=re.sub(r".pdf$",r"_extract1.pdf",filename[m])
                 h=os.path.basename(s)
@@ -175,6 +176,86 @@ def pdf_split():
                 except PermissionError:
                     msg.showerror("","File in use / ファイル使用中")
                     return
+            else:
+                msg.showerror('Info', f'No page specified / ページが指定されていません\n{filename[m]}')
+    else:
+        # 対象が指定されている場合
+        sel_ind=[]
+        for n in range(len(sc)):
+            sel_ind.append(tree.index(sc[n]))
+
+        for n in sel_ind:
+            reader=pf2.PdfFileReader(filename[n])
+            merger=pf2.PdfFileMerger()
+            if pg_flags[n]==True:
+                s=re.sub(r".pdf$",r"_extract1.pdf",filename[n])
+                h=os.path.basename(s)
+                merger.append(filename[n],pages=(pg_min[n]-1,pg_max[n]))
+                try:
+                    if os.path.exists("{}/{}".format(dir,h)):
+                        m=1
+                        s2=re.sub(r".pdf$",r"_extract1(1).pdf",filename[n])
+                        h=os.path.basename(s2)
+                        while os.path.exists("{}/{}".format(dir,h)):
+                            m+=1
+                            s2=re.sub(r".pdf$",r"_extract1({}).pdf".format(m),filename[n])
+                            h=os.path.basename(s2)
+                        merger.write("{}/{}".format(dir,h))
+                        if response==True:
+                            subprocess.Popen([process_name,"{}/{}".format(dir,h)],shell=shell_flag)
+                    else:
+                        merger.write("{}/{}".format(dir,h))
+                        if response==True:
+                            subprocess.Popen([process_name,"{}/{}".format(dir,h)],shell=shell_flag)
+                except PermissionError:
+                    msg.showerror("","File in use / ファイル使用中")
+                    return
+                merger.close()
+                if response==True:
+                    subprocess.Popen([process_name,"{}/{}".format(dir,h)],shell=shell_flag)
+            else:
+                msg.showerror('Info', f'No page specified / ページが指定されていません\n{filename[m]}')
+
+#pdf分割
+def pdf_split():
+    if i==0:
+        return
+    sc=tree.selection()
+    dir=fd.askdirectory()
+    if dir=="":
+            return
+    response=msg.askyesno("Confirm / 確認","Would you open the devided PDFs? / 分割されたPDFを開きますか？")
+
+    if len(sc)==0:
+        # 何も選択されていない場合
+        for m in range(i):
+            reader=pf2.PdfFileReader(filename[m])
+            merger=pf2.PdfFileMerger()
+            merger2=pf2.PdfFileMerger()
+            if pg_flags[m]==True:
+                s=re.sub(r".pdf$",r"_extract1.pdf",filename[m])
+                h=os.path.basename(s)
+                merger.append(filename[m],pages=(pg_min[m]-1,pg_max[m]))
+                try:
+                    if os.path.exists("{}/{}".format(dir,h)):
+                        n=1
+                        s2=re.sub(r".pdf$",r"_extract1(1).pdf",filename[m])
+                        h=os.path.basename(s2)
+                        while os.path.exists("{}/{}".format(dir,h)):
+                            n+=1
+                            s2=re.sub(r".pdf$",r"_extract1({}).pdf".format(n),filename[m])
+                            h=os.path.basename(s2)
+                        merger.write("{}/{}".format(dir,h))
+                    else:
+                        merger.write("{}/{}".format(dir,h))
+                    merger.close()
+                    #if response==True:
+                    #    subprocess.Popen([process_name,"{}/{}".format(dir,h)],shell=shell_flag)
+                except PermissionError:
+                    msg.showerror("","File in use / ファイル使用中")
+                    return
+                
+                # 選択範囲外のページのPDFを出力する
                 s=re.sub(r".pdf$",r"_extract2.pdf",filename[m])
                 h=os.path.basename(s)
                 if pg_min[m]==1 and pg_max[m]==reader.numPages:
@@ -206,8 +287,8 @@ def pdf_split():
                     msg.showerror("","File in use / ファイル使用中")
                     return
                 merger2.close()
-                
             else:
+                # 1ページごとに分割する
                 reader=pf2.PdfFileReader(filename[m])
                 for n in range(reader.numPages):
                     writer=pf2.PdfFileWriter()
@@ -234,6 +315,7 @@ def pdf_split():
                     if response==True:
                         subprocess.Popen([process_name,"{}/{}".format(dir,h)],shell=shell_flag)
     else:
+        # 対象が指定されている場合
         sel_ind=[]
         for n in range(len(sc)):
             sel_ind.append(tree.index(sc[n]))
@@ -266,8 +348,10 @@ def pdf_split():
                     msg.showerror("","File in use / ファイル使用中")
                     return
                 merger.close()
-                if response==True:
-                    subprocess.Popen([process_name,"{}/{}".format(dir,h)],shell=shell_flag)
+                #if response==True:
+                #    subprocess.Popen([process_name,"{}/{}".format(dir,h)],shell=shell_flag)
+                
+                # 選択範囲外のページのPDFを出力する
                 s=re.sub(r".pdf$",r"_extract2.pdf",filename[n])
                 h=os.path.basename(s)
                 if pg_min[n]==1 and pg_max[n]==reader.numPages:
@@ -300,6 +384,7 @@ def pdf_split():
                     return
                 merger.close()
             else:
+                # 1ページごとに分割する
                 reader=pf2.PdfFileReader(filename[n])
                 for m in range(reader.numPages):
                     writer=pf2.PdfFileWriter()
@@ -496,7 +581,6 @@ def page_assgn():
             pw.destroy()    
     
     if pw is None or not pw.winfo_exists():
-
         #ウィンドウ初期設定
         pw=tk.Toplevel(base)
         pw.title("Select page(s) / ページ指定")
@@ -587,6 +671,7 @@ pg_max={}
 pg_flags={}
 teal="#008080"
 indianred="#cd5c5c"
+
 #関数
 #ここより下はUI
 #Window & Frame初期設定
@@ -602,19 +687,21 @@ style=ttk.Style()
 style.configure("Treeview.Heading",font=("",10,"normal","italic"))
 style.configure("MyButton.TButton",backgroud="red",foreground="black")
 style.map("MyButton.TButton",foreground=[("pressed","white"),("active","black")])
+
 #treeview
 frame1=tk.Frame(base)
+
 #frame1.configure(background="skyblue")
 tree=ttk.Treeview(frame1,show="headings",columns=(1,2,3,4),selectmode="extended")
 tree.heading(1,text="File name / ファイル名",command=select_all)
 tree.heading(2,text="Total pages / ページ数",command=select_all)
-tree.heading(3,text="Page range/ページ範囲",command=select_all)
-tree.heading(4,text="File path/ファイルパス",command=select_all)
+tree.heading(3,text="Page range / ページ範囲",command=select_all)
+tree.heading(4,text="File path / ファイルパス",command=select_all)
 
 tree.column(1,width=175)
 tree.column(2,width=100,anchor=tk.CENTER)
-tree.column(3,width=100,anchor=tk.CENTER)
-tree.column(4,width=450,minwidth=250)
+tree.column(3,width=120,anchor=tk.CENTER)
+tree.column(4,width=430,minwidth=250)
 
 tree.pack(padx=10,pady=10,expand=1,fill="both",side=tk.LEFT)
 scrollbar=tk.Scrollbar(frame1,orient=tk.VERTICAL,command=tree.yview)
@@ -641,6 +728,7 @@ pdf_connect=ttk.Button(text="Merge PDFs / PDF結合",style="MyButton.TButton",pa
 show=ttk.Button(text="Show / 表示",style="MyButton.TButton",padding=[35,button_pad],command=print_dict)
 end=ttk.Button(text="Exit / 終了",style="MyButton.TButton",padding=[35,button_pad],command=exit)
 split=ttk.Button(text="Devide PDF / PDF分割",style="MyButton.TButton",padding=[35,button_pad],command=pdf_split)
+extract=ttk.Button(text="Extract PDF / PDF抽出",style="MyButton.TButton",padding=[35,button_pad],command=pdf_extract)
 assign=ttk.Button(text="Select page(s) / ページ指定",style="MyButton.TButton",padding=[35,button_pad],command=page_assgn)
 
 #frame設置
@@ -658,8 +746,9 @@ release.pack(anchor=tk.E,padx=10,pady=10,in_=frame2)
 allselect.pack(anchor=tk.E,padx=10,pady=10,in_=frame2)
 delete.pack(anchor=tk.E,padx=10,pady=10,in_=frame2)
 #frame3
-pdf_connect.pack(side=tk.LEFT,anchor=tk.E,padx=10,pady=10,in_=frame3)
 assign.pack(side=tk.LEFT,anchor=tk.E,padx=10,pady=10,in_=frame3)
+pdf_connect.pack(side=tk.LEFT,anchor=tk.E,padx=10,pady=10,in_=frame3)
+extract.pack(side=tk.LEFT,anchor=tk.E,padx=10,pady=10,in_=frame3)
 split.pack(side=tk.LEFT,anchor=tk.E,padx=10,pady=10,in_=frame3)
 #show.pack(side=tk.LEFT,anchor=tk.E,padx=10,pady=10,in_=frame3)
 end.pack(side=tk.LEFT,anchor=tk.E,padx=10,pady=10,in_=frame3)
