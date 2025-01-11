@@ -421,7 +421,6 @@ def move_up():
     for n in range(len(filename)):
         judge_flagsT(n)
 
-    
 def move_down():
     m=tree.selection()
     dust=[]
@@ -450,8 +449,10 @@ def page_assgn():
     global pw
     global pg_min
     global pg_max
+    
     def validation(afterword):
         return (afterword.isdecimal() and len(afterword)<=2 or len(afterword)==0)
+    
     def print_pg():
             global pg_min,pg_max
             m=tree.selection()
@@ -484,7 +485,7 @@ def page_assgn():
                         pg_flags[tree.index(m[n])]=True
                         judge_flags(tree.index(m[n]),int(entry2.get()),int(entry1.get()))
                         tree.set(m[n],column=3,value="{}~{}".format(pg_min[tree.index(m[n])],pg_max[tree.index(m[n])]))
-                       
+                           
             else:
                 for n in range(len(m)):
                     tree.set(m[n],column=3,value="")
@@ -492,7 +493,8 @@ def page_assgn():
                     pg_max[tree.index(m[n])]=None
                     pg_flags[tree.index(m[n])]=False
             
-            pw.destroy()
+            pw.destroy()    
+    
     if pw is None or not pw.winfo_exists():
 
         #ウィンドウ初期設定
@@ -510,7 +512,6 @@ def page_assgn():
         pw.lift()
         pw.focus_force()
         base.attributes("-topmost",False)
-
 
         #validatecommand
         intvc=(pw.register(validation),"%P")
@@ -626,7 +627,6 @@ tree.bind("<Double-1>",open_pdf)
 
 #各種ボタン設定
 #frame2
-
 frame2=tk.Frame(base,width=450,bg=teal)
 add=ttk.Button(text="Add / 追加",style="MyButton.TButton",padding=[45,button_pad],command=add_file,width=20)
 up=ttk.Button(text="Move up / 上移動",style="MyButton.TButton",padding=[45,button_pad],command=move_up,width=20)
