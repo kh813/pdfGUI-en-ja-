@@ -75,6 +75,13 @@ You'll find the executable file in dist directory
     
    ページ範囲を指定していると，範囲ページのみが結合対象となる．  
   If you select pages, only the selected pages are merged.  
+
+
+## PDF抽出 / Extract PDF
+* 指定したページを抽出し、保存します  
+
+  ページを指定していない場合は警告が表示されます（ファイルは保存されません）  
+  If no page is specified, it'll show an alert message (file is not saved)
   
 
 ## PDF分割 / Devide PDF
