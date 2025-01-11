@@ -8,7 +8,7 @@ import os
 import subprocess
 import platform
 
-#osごとの違い
+# OSごとの違い
 if platform.system()=="Windows":
     process_name="start"
     shell_flag=True
@@ -22,12 +22,12 @@ elif platform.system()=="Linux":
     shell_flag=False
     button_pad = 0
 
-#関数
-#終了ボタンの処理
+# 関数
+# 終了ボタンの処理
 def exit():
     base.destroy()
 
-#ページ範囲判定初期設定
+# ページ範囲判定初期設定
 def judge_flags(ind,max=None,min=None):
     if pg_flags[ind]==False:
         pg_max[ind]=None
@@ -36,11 +36,11 @@ def judge_flags(ind,max=None,min=None):
         pg_max[ind]=max
         pg_min[ind]=min
 
-#辞書型要素移動
+# 辞書型要素移動
 def change_dict_key(d, old_key, new_key, default_value=None):
     d[new_key] = d.pop(old_key, default_value)
 
-#ページ範囲設定
+# ページ範囲設定
 def judge_flagsT(ind):
     a=tree.item(tree.get_children()[ind],"values")
     if not tree.item(tree.get_children()[ind],"values")[2]:
@@ -55,7 +55,7 @@ def judge_flagsT(ind):
         pg_min[ind]=int(h.group())
 
 
-#「選択」ボタン処理
+# 「選択」ボタン処理
 def add_file():
     global i
     global filename
@@ -105,7 +105,7 @@ def add_file():
             msg.showerror("PDF corrupted / PDF破損","PDF cannot be read / PDFが読み込めません")
     remove_tree()
        
-#pdf結合処理
+# PDF結合
 def connect():
     if i<=1:
         return
@@ -139,7 +139,7 @@ def connect():
             subprocess.Popen([process_name,pdfname],shell=shell_flag)
     merger.close()
                     
-#pdf抽出
+# PDF抽出
 def pdf_extract():
     if i==0:
         return
@@ -216,7 +216,7 @@ def pdf_extract():
             else:
                 msg.showerror('Info', f'No page specified / ページが指定されていません\n{filename[m]}')
 
-#pdf分割
+# PDF分割
 def pdf_split():
     if i==0:
         return
@@ -411,7 +411,7 @@ def pdf_split():
                     if response==True:
                         subprocess.Popen([process_name,"{}/{}".format(dir,h)],shell=shell_flag)
 
-#置換
+# 一覧の選択項目置換
 def pdf_replace():
     global i
     global filename
@@ -463,7 +463,7 @@ def pdf_replace():
         for n in range(len(filename)):
             judge_flagsT(n)
 
-#削除処理    
+# 一覧から削除   
 def delete_pdf():
     global i
     m=tree.selection()
@@ -489,7 +489,7 @@ def delete_pdf():
         for n in range(len(filename)):
             judge_flagsT(n)
 
-#選択ファイルを上に移動
+# 選択ファイルを上に移動
 def move_up():
     m=tree.selection()
     dust=[]
@@ -506,6 +506,7 @@ def move_up():
     for n in range(len(filename)):
         judge_flagsT(n)
 
+# 選択ファイルを下に移動
 def move_down():
     m=tree.selection()
     dust=[]
@@ -525,8 +526,15 @@ def move_down():
     for n in range(len(filename)):
         judge_flagsT(n)
 
-#ページ範囲指定ウィンドウ表示
+# ページ範囲指定ウィンドウ表示
 def page_assgn():
+    # ページ範囲指定するファイルが選択されていない場合は終了
+    sc=tree.selection()
+    if len(sc)==0:
+        msg.showerror("","No file selected / ファイルが指定されていません")
+        return
+    
+    # ページ範囲指定開始
     bx=base.winfo_x()
     by=base.winfo_y()
     wb=base.winfo_width()
@@ -539,46 +547,49 @@ def page_assgn():
         return (afterword.isdecimal() and len(afterword)<=2 or len(afterword)==0)
     
     def print_pg():
-            global pg_min,pg_max
-            m=tree.selection()
-            if entry1.get() or entry2.get():
-                if  entry1.get() and not entry2.get():
-                    for n in range(len(m)):
-                        if int(entry1.get()) > int(tree.item(m[n],"values")[1]) or int(entry1.get())==0:
-                            pw.destroy()
-                            msg.showerror("","Out of range / 範囲にありません")
-                            return
-                        pg_flags[tree.index(m[n])]=True
-                        judge_flags(tree.index(m[n]),int(entry1.get()),int(entry1.get()))
-                        tree.set(m[n],column=3,value="{}".format(pg_min[tree.index(m[n])]))
-                elif entry2.get() and not entry1.get():
-                    for n in range(len(m)):
-                        if int(entry2.get()) > int(tree.item(m[n],"values")[1]) or int(entry2.get())==0:
-                            pw.destroy()
-                            msg.showerror("","Out of range / 範囲にありません")
-                            return
-                        pg_flags[tree.index(m[n])]=True
-                        judge_flags(tree.index(m[n]),int(entry2.get()),int(entry2.get()))
-                        tree.set(m[n],column=3,value="{}".format(pg_max[tree.index(m[n])]))
-
-                else:
-                    for n in range(len(m)):
-                        if int(entry1.get()) > int(tree.item(m[n],"values")[1]) or int(entry2.get()) > int(tree.item(m[n],"values")[1]) or int(entry1.get())==0 or int(entry2.get())<=1 or int(entry1.get())>int(entry2.get()):
-                            pw.destroy()
-                            msg.showerror("","Out of range / 範囲にありません")
-                            return
-                        pg_flags[tree.index(m[n])]=True
-                        judge_flags(tree.index(m[n]),int(entry2.get()),int(entry1.get()))
-                        tree.set(m[n],column=3,value="{}~{}".format(pg_min[tree.index(m[n])],pg_max[tree.index(m[n])]))
-                           
+        global pg_min,pg_max
+        m=tree.selection()
+        if entry1.get() or entry2.get():
+            if  entry1.get() and not entry2.get():
+                for n in range(len(m)):
+                    if int(entry1.get()) > int(tree.item(m[n],"values")[1]) or int(entry1.get())==0:
+                        pw.destroy()
+                        msg.showerror("","Out of range / 範囲にありません１")
+                        return
+                    pg_flags[tree.index(m[n])]=True
+                    judge_flags(tree.index(m[n]),int(entry1.get()),int(entry1.get()))
+                    tree.set(m[n],column=3,value="{}".format(pg_min[tree.index(m[n])]))
+            elif entry2.get() and not entry1.get():
+                for n in range(len(m)):
+                    if int(entry2.get()) > int(tree.item(m[n],"values")[1]) or int(entry2.get())==0:
+                        pw.destroy()
+                        msg.showerror("","Out of range / 範囲にありません２")
+                        return
+                    pg_flags[tree.index(m[n])]=True
+                    judge_flags(tree.index(m[n]),int(entry2.get()),int(entry2.get()))
+                    tree.set(m[n],column=3,value="{}".format(pg_max[tree.index(m[n])]))
             else:
                 for n in range(len(m)):
-                    tree.set(m[n],column=3,value="")
-                    pg_min[tree.index(m[n])]=None
-                    pg_max[tree.index(m[n])]=None
-                    pg_flags[tree.index(m[n])]=False
-            
-            pw.destroy()    
+                    if int(entry1.get()) > int(tree.item(m[n],"values")[1]) \
+                            or int(entry2.get()) > int(tree.item(m[n],"values")[1]) \
+                            or int(entry1.get()) == 0 \
+                            or int(entry2.get()) < 1 \
+                            or int(entry1.get()) > int(entry2.get()):
+                        pw.destroy()
+                        msg.showerror("","Out of range / 範囲にありません３")
+                        return
+                    pg_flags[tree.index(m[n])]=True
+                    judge_flags(tree.index(m[n]),int(entry2.get()),int(entry1.get()))
+                    tree.set(m[n],column=3,value="{}~{}".format(pg_min[tree.index(m[n])],pg_max[tree.index(m[n])]))
+                        
+        else:
+            for n in range(len(m)):
+                tree.set(m[n],column=3,value="")
+                pg_min[tree.index(m[n])]=None
+                pg_max[tree.index(m[n])]=None
+                pg_flags[tree.index(m[n])]=False
+        
+        pw.destroy()    
     
     if pw is None or not pw.winfo_exists():
         #ウィンドウ初期設定
@@ -619,24 +630,24 @@ def page_assgn():
         
         pw.mainloop()
 
-#選択解除
+# 選択解除
 def remove_tree():
     tree.selection_remove(tree.selection())
 
-#選択解除(treeviwのファイル部分以外を選択した場合)
+# 選択解除(treeviwのファイル部分以外を選択した場合)
 def remove_treeE(event):
     if not tree.identify_row(event.y):
          remove_tree()
 
-#全選択
+# 全選択
 def select_all():
     tree.selection_add(tree.get_children())
 
-#不明(デバッグ用?)
+# 不明(デバッグ用?)
 def select_allE():
     select_all()
 
-#pdfを既定アプリで開く
+# PDFを既定アプリで開く
 def open_pdf(event):
     m=tree.selection()
     if len(m)>0:
@@ -645,7 +656,7 @@ def open_pdf(event):
             subprocess.Popen([process_name,pdf],shell=shell_flag)
         remove_tree()
 
-#デバッグ用
+# デバッグ用
 def print_dict():
     print(filename)
     print("id:",tree.get_children())
@@ -660,10 +671,10 @@ def print_dict():
     m=re.search(r'\d+$',tree.item(tree.get_children()[i-1],"values")[2])
     print(m.group())
 
-#グローバル変数
+# グローバル変数
 filename=[]
 
-#ファイル最後尾インデックス?
+# ファイル最後尾インデックス?
 i=0
 pw=None
 pg_min={}
@@ -672,9 +683,9 @@ pg_flags={}
 teal="#008080"
 indianred="#cd5c5c"
 
-#関数
-#ここより下はUI
-#Window & Frame初期設定
+# 関数
+# ここより下はUI
+# Window & Frame初期設定
 base=tk.Tk()
 base.title("pdfGUI")
 base.geometry("1300x600+200+200")
@@ -688,7 +699,7 @@ style.configure("Treeview.Heading",font=("",10,"normal","italic"))
 style.configure("MyButton.TButton",backgroud="red",foreground="black")
 style.map("MyButton.TButton",foreground=[("pressed","white"),("active","black")])
 
-#treeview
+# treeview
 frame1=tk.Frame(base)
 
 #frame1.configure(background="skyblue")
@@ -708,12 +719,12 @@ scrollbar=tk.Scrollbar(frame1,orient=tk.VERTICAL,command=tree.yview)
 scrollbar.pack(side=tk.RIGHT,fill="both")
 tree.configure(yscrollcommand=scrollbar.set)
 
-#bind
+# bind
 tree.bind("<1>",remove_treeE)
 tree.bind("<Double-1>",open_pdf)
 
-#各種ボタン設定
-#frame2
+# 各種ボタン設定
+# frame2
 frame2=tk.Frame(base,width=450,bg=teal)
 add=ttk.Button(text="Add / 追加",style="MyButton.TButton",padding=[45,button_pad],command=add_file,width=20)
 up=ttk.Button(text="Move up / 上移動",style="MyButton.TButton",padding=[45,button_pad],command=move_up,width=20)
@@ -722,7 +733,7 @@ release=ttk.Button(text="Unselect / 選択解除",style="MyButton.TButton",paddi
 delete=ttk.Button(text="Delete / 削除",style="MyButton.TButton",padding=[45,button_pad],command=delete_pdf,width=20)
 allselect=ttk.Button(text="Select All / ALL選択",style="MyButton.TButton",padding=[45,button_pad],command=select_all,width=20)
 replace=ttk.Button(text="Replace / 置換",style="MyButton.TButton",padding=[45,button_pad],command=pdf_replace,width=20)
-#frame3
+# frame3
 frame3=tk.Frame(base,bg=indianred)
 pdf_connect=ttk.Button(text="Merge PDFs / PDF結合",style="MyButton.TButton",padding=[35,button_pad],command=connect)
 show=ttk.Button(text="Show / 表示",style="MyButton.TButton",padding=[35,button_pad],command=print_dict)
@@ -731,13 +742,13 @@ split=ttk.Button(text="Devide PDF / PDF分割",style="MyButton.TButton",padding=
 extract=ttk.Button(text="Extract PDF / PDF抽出",style="MyButton.TButton",padding=[35,button_pad],command=pdf_extract)
 assign=ttk.Button(text="Select page(s) / ページ指定",style="MyButton.TButton",padding=[35,button_pad],command=page_assgn)
 
-#frame設置
+# frame設置
 frame1.pack(side=tk.LEFT,anchor=tk.NW,in_=base,expand=1,fill="both")
 frame2.pack()
 frame3.pack(side=tk.BOTTOM,anchor=tk.SE,before=frame1)
 
-#ボタン配置
-#frame2
+# ボタン配置
+# frame2
 add.pack(anchor=tk.E,padx=10,pady=10,in_=frame2)
 replace.pack(anchor=tk.E,padx=10,pady=10,in_=frame2)
 up.pack(anchor=tk.E,padx=10,pady=10,in_=frame2)
@@ -745,7 +756,7 @@ down.pack(anchor=tk.E,padx=10,pady=10,in_=frame2)
 release.pack(anchor=tk.E,padx=10,pady=10,in_=frame2)
 allselect.pack(anchor=tk.E,padx=10,pady=10,in_=frame2)
 delete.pack(anchor=tk.E,padx=10,pady=10,in_=frame2)
-#frame3
+# frame3
 assign.pack(side=tk.LEFT,anchor=tk.E,padx=10,pady=10,in_=frame3)
 pdf_connect.pack(side=tk.LEFT,anchor=tk.E,padx=10,pady=10,in_=frame3)
 extract.pack(side=tk.LEFT,anchor=tk.E,padx=10,pady=10,in_=frame3)
