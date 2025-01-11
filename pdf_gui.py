@@ -7,6 +7,7 @@ import re
 import os
 import subprocess
 import platform
+
 #osごとの違い
 if platform.system()=="Windows":
     process_name="start"
@@ -34,6 +35,7 @@ def judge_flags(ind,max=None,min=None):
     else:
         pg_max[ind]=max
         pg_min[ind]=min
+
 #辞書型要素移動
 def change_dict_key(d, old_key, new_key, default_value=None):
     d[new_key] = d.pop(old_key, default_value)
@@ -102,9 +104,6 @@ def add_file():
             del filename[i]
             msg.showerror("PDF corrupted / PDF破損","PDF seems broken / PDFが正しくありません")
     remove_tree()
-
-
-
        
 #pdf結合処理
 def connect():
@@ -139,9 +138,8 @@ def connect():
         else:
             subprocess.Popen([process_name,pdfname],shell=shell_flag)
     merger.close()
-
     
-    #pdf分割
+#pdf分割
 def pdf_split():
     if i==0:
         return
@@ -327,6 +325,7 @@ def pdf_split():
                         return
                     if response==True:
                         subprocess.Popen([process_name,"{}/{}".format(dir,h)],shell=shell_flag)
+
 #置換
 def pdf_replace():
     global i
@@ -378,6 +377,7 @@ def pdf_replace():
             del pg_max[n]
         for n in range(len(filename)):
             judge_flagsT(n)
+
 #削除処理    
 def Delete_pdf():
     global i
@@ -403,6 +403,7 @@ def Delete_pdf():
         i-=len(m)
         for n in range(len(filename)):
             judge_flagsT(n)
+
 #選択ファイルを上に移動
 def move_up():
     m=tree.selection()
@@ -439,6 +440,7 @@ def move_down():
         tree.move(m[n],"",tree.index(m[n])+1)
     for n in range(len(filename)):
         judge_flagsT(n)
+
 #ページ範囲指定ウィンドウ表示
 def page_assgn():
     bx=base.winfo_x()
@@ -527,25 +529,28 @@ def page_assgn():
         #テキストボックス位置
         entry1.grid(column=1,row=2,padx=5,pady=5)
         entry2.grid(column=1,row=3,padx=5,pady=5)
-
         
         dec=ttk.Button(pw,text="OK / 決定",command=print_pg).grid(column=0,row=4,columnspan=2,pady=10)
-
         
         pw.mainloop()
+
 #選択解除
 def remove_tree():
     tree.selection_remove(tree.selection())
+
 #選択解除(treeviwのファイル部分以外を選択した場合)
 def remove_treeE(event):
     if not tree.identify_row(event.y):
          remove_tree()
+
 #全選択
 def select_all():
     tree.selection_add(tree.get_children())
+
 #不明(デバッグ用?)
 def select_allE():
     select_all()
+
 #pdfを既定アプリで開く
 def open_pdf(event):
     m=tree.selection()
@@ -554,6 +559,7 @@ def open_pdf(event):
             pdf=filename[tree.index(m[n])]
             subprocess.Popen([process_name,pdf],shell=shell_flag)
         remove_tree()
+
 #デバッグ用
 def print_dict():
     print(filename)
@@ -568,8 +574,10 @@ def print_dict():
     #print(tree.item(tree.get_children()[i-1],"values")[2])
     m=re.search(r'\d+$',tree.item(tree.get_children()[i-1],"values")[2])
     print(m.group())
+
 #グローバル変数
 filename=[]
+
 #ファイル最後尾インデックス?
 i=0
 pw=None
@@ -584,7 +592,6 @@ indianred="#cd5c5c"
 base=tk.Tk()
 base.title("pdfGUI")
 base.geometry("1300x600+200+200")
-
 
 base.minsize(1300,600)
 base.resizable(width=True,height=True)
@@ -607,7 +614,6 @@ tree.column(1,width=175)
 tree.column(2,width=100,anchor=tk.CENTER)
 tree.column(3,width=100,anchor=tk.CENTER)
 tree.column(4,width=450,minwidth=250)
-
 
 tree.pack(padx=10,pady=10,expand=1,fill="both",side=tk.LEFT)
 scrollbar=tk.Scrollbar(frame1,orient=tk.VERTICAL,command=tree.yview)
@@ -642,10 +648,8 @@ frame1.pack(side=tk.LEFT,anchor=tk.NW,in_=base,expand=1,fill="both")
 frame2.pack()
 frame3.pack(side=tk.BOTTOM,anchor=tk.SE,before=frame1)
 
-
 #ボタン配置
 #frame2
-
 add.pack(anchor=tk.E,padx=10,pady=10,in_=frame2)
 replace.pack(anchor=tk.E,padx=10,pady=10,in_=frame2)
 up.pack(anchor=tk.E,padx=10,pady=10,in_=frame2)
