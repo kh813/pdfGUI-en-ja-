@@ -379,7 +379,7 @@ def pdf_replace():
             judge_flagsT(n)
 
 #削除処理    
-def Delete_pdf():
+def delete_pdf():
     global i
     m=tree.selection()
     if i==0:
@@ -632,7 +632,7 @@ add=ttk.Button(text="Add / 追加",style="MyButton.TButton",padding=[45,button_p
 up=ttk.Button(text="Move up / 上移動",style="MyButton.TButton",padding=[45,button_pad],command=move_up,width=20)
 down=ttk.Button(text="Move down / 下移動",style="MyButton.TButton",padding=[45,button_pad],command=move_down,width=20)
 release=ttk.Button(text="Unselect / 選択解除",style="MyButton.TButton",padding=[45,button_pad],command=remove_tree,width=20)
-delete=ttk.Button(text="Delete / 削除",style="MyButton.TButton",padding=[45,button_pad],command=Delete_pdf,width=20)
+delete=ttk.Button(text="Delete / 削除",style="MyButton.TButton",padding=[45,button_pad],command=delete_pdf,width=20)
 allselect=ttk.Button(text="Select All / ALL選択",style="MyButton.TButton",padding=[45,button_pad],command=select_all,width=20)
 replace=ttk.Button(text="Replace / 置換",style="MyButton.TButton",padding=[45,button_pad],command=pdf_replace,width=20)
 #frame3
