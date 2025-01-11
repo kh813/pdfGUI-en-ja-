@@ -3,6 +3,7 @@
 こちらで公開されていたコードをベースに、日英バイリンガル表示化  
 また「PDF特定ページ抽出」機能を追加
 Based on the following code, English labels added  
+"Extract selected pages" feature added as well
 https://github.com/jean0enuma/pdfGUI  
   
 以下の説明文は原文を更新した上で英訳を追加  
