@@ -83,7 +83,7 @@ def add_file():
             i+=1
         except pf2.utils.PdfReadError as e:
             del filename[h+1]
-            msg.showerror("PDF corrupted / PDF破損","PDF seems broken / PDFが正しくありません")
+            msg.showerror("PDF corrupted / PDF破損","PDF cannot be read / PDFが読み込めません")
     else:
         tmp=fd.askopenfilename(filetypes=[("PDF","*.pdf")])
         filename.append(tmp)
@@ -102,7 +102,7 @@ def add_file():
             i+=1
         except pf2.utils.PdfReadError:
             del filename[i]
-            msg.showerror("PDF corrupted / PDF破損","PDF seems broken / PDFが正しくありません")
+            msg.showerror("PDF corrupted / PDF破損","PDF cannot be read / PDFが読み込めません")
     remove_tree()
        
 #pdf結合処理
