@@ -11,12 +11,10 @@ I revised a little and added English translation to the following original readm
 ____
 
 # pdfGUI
-* PDFの結合，抽出、分割ができる  
-  Merge / extract / devide PDF  
-* Python/Tkinterを利用  
-  Using Python/Tkinter
-* Pyinstallerでexe/app化  
-  Generate exe/app binaries with Pyinstaller
+* GUIでPDFの結合，抽出、分割ができる  
+  Merge / extract / devide PDF with GUI  
+* Pyinstallerでexe/app化したバイナリの配布可能  
+  Generate portable exe/app binaries by Pyinstaller  
 
 # 動作条件 / Supported environment
 - Windows 11   
