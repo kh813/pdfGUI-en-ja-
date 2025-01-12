@@ -19,8 +19,8 @@ ____
   Generate exe/app binaries with Pyinstaller
 
 # 動作条件 / Supported environment
-- Windows 11 (x64, arm64)   
-- macOS  
+- Windows 11   
+- macOS 15 Sequoia  
 - Ubuntu(だぶん) ※動作未確認 / Maybe, not tested  
 
 
