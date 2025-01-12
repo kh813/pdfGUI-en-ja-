@@ -6,21 +6,25 @@ Based on the following code, English labels added
 "Extract selected pages" feature added as well
 https://github.com/jean0enuma/pdfGUI  
   
-以下の説明文は原文を更新した上で英訳を追加  
+以下の説明文は、原文を一部改訂した上で英訳を追加  
 I revised a little and added English translation to the following original readme  
 ____
 
 # pdfGUI
 * GUIでPDFの結合，抽出、分割ができる  
   Merge / extract / devide PDF with GUI  
-* Pyinstallerでexe/app化したバイナリの配布可能  
-  Generate portable exe/app binaries by Pyinstaller  
+* Windows,Mac向け実行ファイルを生成し、Pythonがインストールされていなくても実行できる  
+  Generate Windows & Mac executables, which runs without Python installed
 
 # 動作条件 / Supported environment
 - Windows 11   
 - macOS 15 Sequoia  
-- Ubuntu(だぶん) ※動作未確認 / Maybe, not tested  
+- ~~Ubuntu(だぶん) ※動作未確認 / Maybe, not tested~~  
 
+　Ubuntu 24.04で動かそうとしたたところ、tkinter not found などのエラーが発生。  
+　パスが通ってないなどが原因と思われるが、その辺のノウハウがなく実行できなかった。  
+  Tried to run it on Ubuntu 24.04, but tkinter nout found error occurred.  
+  Probably path problem, but couldn't make the way to run it.   
 
 # 実行方法 / Running the app
 python3で動作しています．必要なライブラリはPyPDF2だけです．  
